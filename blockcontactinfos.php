@@ -45,7 +45,7 @@ class Blockcontactinfos extends Module
 
 		$this->displayName = $this->l('Contact information block');
 		$this->description = $this->l('This module will allow you to display your e-store\'s contact information in a customizable block.');
-		$this->ps_versions_compliancy = array('min' => '1.5.6.1', 'max' => _PS_VERSION_);
+		$this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
 	}
 	
 	public function install()
