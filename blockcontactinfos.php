@@ -42,7 +42,7 @@ class Blockcontactinfos extends Module
 		$this->name = 'blockcontactinfos';
 		$this->author = 'PrestaShop';
 		$this->tab = 'front_office_features';
-		$this->version = '1.2.0';
+		$this->version = '1.2.1';
 
 		$this->bootstrap = true;
 		parent::__construct();	
