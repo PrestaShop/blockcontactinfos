@@ -32,6 +32,13 @@
 		{if $blockcontactinfos_address != ''}<li>{$blockcontactinfos_address|escape:'html':'UTF-8'|nl2br}</li>{/if}
 		{if $blockcontactinfos_phone != ''}<li>{l s='Tel' mod='blockcontactinfos'} {$blockcontactinfos_phone|escape:'html':'UTF-8'}</li>{/if}
 		{if $blockcontactinfos_email != ''}<li>{l s='Email:' mod='blockcontactinfos'} {mailto address=$blockcontactinfos_email|escape:'html':'UTF-8' encode="hex"}</li>{/if}
+		{if $blockcontactinfos_website != ''}
+		<li>{l s='Contact:' mod='blockcontactinfos'}
+			<a href="{$blockcontactinfos_website|escape:'html':'UTF-8'}" title="{l s='Contact' mod='blockcontactinfos'}">
+				{$blockcontactinfos_website|escape:'html':'UTF-8'}
+			</a>
+		</li>
+		{/if}
 	</ul>
 </div>
 <!-- /MODULE Block contact infos -->
