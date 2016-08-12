@@ -23,11 +23,12 @@
 
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
+*
 */
 
 if (!defined('_CAN_LOAD_FILES_'))
 	exit;
-	
+
 class Blockcontactinfos extends Module
 {
 	protected static $contact_fields = array(
@@ -35,6 +36,7 @@ class Blockcontactinfos extends Module
 		'BLOCKCONTACTINFOS_ADDRESS',
 		'BLOCKCONTACTINFOS_PHONE',
 		'BLOCKCONTACTINFOS_EMAIL',
+		'BLOCKCONTACTINFOS_WEBSITE',
 	);
 
 	public function __construct()
@@ -45,7 +47,7 @@ class Blockcontactinfos extends Module
 		$this->version = '1.2.1';
 
 		$this->bootstrap = true;
-		parent::__construct();	
+		parent::__construct();
 
 		$this->displayName = $this->l('Contact information block');
 		$this->description = $this->l('This module will allow you to display your e-store\'s contact information in a customizable block.');
@@ -58,6 +60,7 @@ class Blockcontactinfos extends Module
 		Configuration::updateValue('BLOCKCONTACTINFOS_ADDRESS', trim(preg_replace('/ +/', ' ', Configuration::get('PS_SHOP_ADDR1').' '.Configuration::get('PS_SHOP_ADDR2')."\n".Configuration::get('PS_SHOP_CODE').' '.Configuration::get('PS_SHOP_CITY')."\n".Country::getNameById(Configuration::get('PS_LANG_DEFAULT'), Configuration::get('PS_SHOP_COUNTRY_ID')))));
 		Configuration::updateValue('BLOCKCONTACTINFOS_PHONE', Configuration::get('PS_SHOP_PHONE'));
 		Configuration::updateValue('BLOCKCONTACTINFOS_EMAIL', Configuration::get('PS_SHOP_EMAIL'));
+		Configuration::updateValue('BLOCKCONTACTINFOS_WEBSITE', Configuration::get('PS_SHOP_WEBSITE'));
 		$this->_clearCache('blockcontactinfos.tpl');
 		return (parent::install() && $this->registerHook('header') && $this->registerHook('footer'));
 	}
@@ -73,7 +76,7 @@ class Blockcontactinfos extends Module
 	{
 		$html = '';
 		if (Tools::isSubmit('submitModule'))
-		{	
+		{
 			foreach (Blockcontactinfos::$contact_fields as $field)
 				Configuration::updateValue($field, Tools::getValue($field));
 			$this->_clearCache('blockcontactinfos.tpl');
@@ -87,15 +90,15 @@ class Blockcontactinfos extends Module
 	{
 		$this->context->controller->addCSS(($this->_path).'blockcontactinfos.css', 'all');
 	}
-	
+
 	public function hookFooter($params)
-	{	
+	{
 		if (!$this->isCached('blockcontactinfos.tpl', $this->getCacheId()))
 			foreach (Blockcontactinfos::$contact_fields as $field)
 				$this->smarty->assign(strtolower($field), Configuration::get($field));
 		return $this->display(__FILE__, 'blockcontactinfos.tpl', $this->getCacheId());
 	}
-	
+
 	public function renderForm()
 	{
 		$fields_form = array(
@@ -125,13 +128,18 @@ class Blockcontactinfos extends Module
 						'label' => $this->l('Email'),
 						'name' => 'BLOCKCONTACTINFOS_EMAIL',
 					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Website'),
+						'name' => 'BLOCKCONTACTINFOS_WEBSITE',
+					),
 				),
 				'submit' => array(
 					'title' => $this->l('Save')
 				)
 			),
 		);
-		
+
 		$helper = new HelperForm();
 		$helper->show_toolbar = false;
 		$helper->table =  $this->table;
