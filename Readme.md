@@ -1,5 +1,7 @@
 # Contact information block
 
+**This module has been archived, it’s no longer maintained but you still can fork it if you need it for your shop.**
+
 ## About
 
 This module will allow you to display your e-store\'s contact information in a customizable block.
